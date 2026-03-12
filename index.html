@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Zafer HVAC</title>
+
+<style>
+body{
+font-family:Arial;
+background:#111;
+color:white;
+padding:20px
+}
+
+.box{
+background:#222;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px
+}
+
+input,select,button{
+width:100%;
+padding:10px;
+margin-top:6px;
+border-radius:6px;
+border:none
+}
+
+button{
+background:#2ecc71;
+color:white;
+font-weight:bold
+}
+
+.result{
+margin-top:10px;
+color:#4fc3f7;
+font-weight:bold
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Zafer HVAC</h2>
+
+<div class="box">
+Gaz Basınç Tahmini
+
+<select id="gas">
+<option value="410">R410A</option>
+<option value="32">R32</option>
+</select>
+
+<input id="temp" type="number" placeholder="Dış hava °C">
+
+<button onclick="calcPressure()">Hesapla</button>
+
+<div id="pressure" class="result"></div>
+</div>
+
+
+<div class="box">
+Superheat Hesaplama
+
+<input id="pipe" type="number" placeholder="Boru sıcaklığı">
+
+<input id="sat" type="number" placeholder="Satürasyon sıcaklığı">
+
+<button onclick="calcSH()">Hesapla</button>
+
+<div id="sh" class="result"></div>
+</div>
+
+
+<div class="box">
+Delta T
+
+<input id="inlet" type="number" placeholder="Giriş hava °C">
+
+<input id="outlet" type="number" placeholder="Çıkış hava °C">
+
+<button onclick="calcDT()">Hesapla</button>
+
+<div id="dt" class="result"></div>
+</div>
+
+
+<script>
+
+function calcPressure(){
+
+var gas=document.getElementById("gas").value
+var t=parseFloat(document.getElementById("temp").value)
+
+var result=""
+
+if(gas=="410"){
+
+if(t<=25){result="18-21 bar"}
+else if(t<=30){result="22-25 bar"}
+else{result="25+ bar"}
+
+}
+
+if(gas=="32"){
+
+if(t<=25){result="16-19 bar"}
+else if(t<=30){result="19-22 bar"}
+else{result="22+ bar"}
+
+}
+
+document.getElementById("pressure").innerHTML="Sonuç: "+result
+
+}
+
+
+function calcSH(){
+
+var pipe=parseFloat(document.getElementById("pipe").value)
+
+var sat=parseFloat(document.getElementById("sat").value)
+
+var sh=pipe-sat
+
+document.getElementById("sh").innerHTML="Superheat: "+sh+" °C"
+
+}
+
+
+function calcDT(){
+
+var i=parseFloat(document.getElementById("inlet").value)
+
+var o=parseFloat(document.getElementById("outlet").value)
+
+var dt=i-o
+
+document.getElementById("dt").innerHTML="Delta T: "+dt+" °C"
+
+}
+
+</script>
+
+</body>
+</html>

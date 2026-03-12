@@ -1,16 +1,16 @@
-="hvacv2"}
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Zafer HVAC</title>
+<title>HVAC AI - Zafer Özkaraman</title>
 
 <style>
+
 body{
-font-family:Arial;
-background:#0f172a;
+background:#0b0f1a;
 color:white;
-padding:20px
+font-family:Arial;
+padding:20px;
 }
 
 h1{
@@ -18,156 +18,32 @@ text-align:center;
 }
 
 .menu{
-background:#1e293b;
-padding:15px;
-border-radius:10px;
-margin-bottom:15px
-}
-
-button{
-width:100%;
+background:#151c2f;
 padding:12px;
-margin-top:8px;
-border:none;
-border-radius:8px;
-background:#22c55e;
-color:white;
-font-size:16px
+margin:10px 0;
+border-radius:10px;
+font-size:18px;
+text-align:center;
 }
 
-input,select{
-width:100%;
-padding:10px;
-margin-top:6px;
-border-radius:6px;
-border:none
-}
-
-.result{
-margin-top:10px;
-color:#38bdf8;
-font-weight:bold
-}
-
-.section{
-display:none
-}
 </style>
 
 </head>
 
 <body>
 
-<h1>Zafer HVAC</h1>
+<h1>HVAC AI</h1>
+<p style="text-align:center;">Zafer Özkaraman</p>
 
-<div class="menu">
+<div class="menu">🤖 AI TEŞHİS</div>
+<div class="menu">🔥 GAZ ANALİZ</div>
+<div class="menu">🌡 SENSÖR TEST</div>
+<div class="menu">❄️ SUPERHEAT</div>
+<div class="menu">💧 SUBCOOL</div>
+<div class="menu">🌬 DELTA-T</div>
+<div class="menu">⚡ ELEKTRİK TEST</div>
+<div class="menu">📊 GAZ TABLOSU</div>
+<div class="menu">🏢 VRF SERVİS</div>
 
-<button onclick="show('teshis')">🔧 Klima Teşhis</button>
-<button onclick="show('gaz')">🔥 Gaz Hesap</button>
-<button onclick="show('sensor')">🌡 Sensör Hesap</button>
-<button onclick="show('vrf')">🏢 VRF Servis</button>
-
-</div>
-
-<div id="gaz" class="section">
-
-<h3>Gaz Basınç Tahmini</h3>
-
-<select id="gas">
-<option value="410">R410A</option>
-<option value="32">R32</option>
-</select>
-
-<input id="temp" placeholder="Dış hava °C">
-
-<button onclick="calcPressure()">Hesapla</button>
-
-<div id="pressure" class="result"></div>
-
-</div>
-
-<div id="sensor" class="section">
-
-<h3>Sensör Hesap</h3>
-
-<input id="ohm" placeholder="Direnç (KΩ)">
-
-<button onclick="calcSensor()">Hesapla</button>
-
-<div id="sensorResult" class="result"></div>
-
-</div>
-
-<div id="teshis" class="section">
-
-<h3>Klima Teşhis</h3>
-
-<p>Delta-T normal: 8-12°C</p>
-<p>Superheat normal: 6-12°C</p>
-<p>Subcool normal: 3-8°C</p>
-
-</div>
-
-<div id="vrf" class="section">
-
-<h3>VRF Servis</h3>
-
-<p>Toshiba Test Mode: 801</p>
-<p>PMV Step kontrol servis menüsünden yapılır.</p>
-
-</div>
-
-<script>
-
-function show(id){
-
-document.querySelectorAll('.section').forEach(s=>{
-s.style.display='none'
-})
-
-document.getElementById(id).style.display='block'
-
-}
-
-function calcPressure(){
-
-var gas=document.getElementById("gas").value
-var t=parseFloat(document.getElementById("temp").value)
-
-var result=""
-
-if(gas=="410"){
-
-if(t<=25){result="18-21 bar"}
-else if(t<=30){result="22-25 bar"}
-else{result="25+ bar"}
-
-}
-
-if(gas=="32"){
-
-if(t<=25){result="16-19 bar"}
-else if(t<=30){result="19-22 bar"}
-else{result="22+ bar"}
-
-}
-
-document.getElementById("pressure").innerHTML="Sonuç: "+result
-
-}
-
-function calcSensor(){
-
-var ohm=document.getElementById("ohm").value
-
-if(ohm>=15){r="≈25°C"}
-else if(ohm>=10){r="≈30°C"}
-else{r="≈35°C"}
-
-document.getElementById("sensorResult").innerHTML=r
-
-}
-
-</script>
-
-</bod
+</body>
+</html>

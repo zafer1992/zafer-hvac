@@ -2,14 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>HVAC AI - Zafer Özkaraman</title>
+<title>HVAC AI</title>
 
 <style>
-
 body{
-background:#0b0f1a;
-color:white;
 font-family:Arial;
+background:#0f172a;
+color:white;
 padding:20px;
 }
 
@@ -18,14 +17,18 @@ text-align:center;
 }
 
 .menu{
-background:#151c2f;
-padding:12px;
+background:#1e293b;
+padding:14px;
 margin:10px 0;
 border-radius:10px;
 font-size:18px;
 text-align:center;
+cursor:pointer;
 }
 
+.menu:hover{
+background:#334155;
+}
 </style>
 
 </head>
@@ -35,15 +38,46 @@ text-align:center;
 <h1>HVAC AI</h1>
 <p style="text-align:center;">Zafer Özkaraman</p>
 
-<div class="menu">🤖 AI TEŞHİS</div>
+<div class="menu" onclick="aiTeshis()">🤖 AI TEŞHİS</div>
 <div class="menu">🔥 GAZ ANALİZ</div>
-<div class="menu">🌡 SENSÖR TEST</div>
+<div class="menu">🌡️ SENSÖR TEST</div>
 <div class="menu">❄️ SUPERHEAT</div>
 <div class="menu">💧 SUBCOOL</div>
-<div class="menu">🌬 DELTA-T</div>
+<div class="menu">📉 DELTA-T</div>
 <div class="menu">⚡ ELEKTRİK TEST</div>
 <div class="menu">📊 GAZ TABLOSU</div>
 <div class="menu">🏢 VRF SERVİS</div>
 
-</body>
+<script>
+function aiTeshis(){
+
+let ariza = prompt("Arızayı yaz");
+
+if(!ariza) return;
+
+ariza = ariza.toLowerCase();
+
+let sonuc="Teşhis bulunamadı";
+
+if(ariza.includes("soğutmuyor")){
+sonuc="1️⃣ Gaz eksik\n2️⃣ Kompresör çalışmıyor\n3️⃣ 4 yollu vana arızası";
+}
+
+else if(ariza.includes("buzlan")){
+sonuc="1️⃣ Gaz eksik\n2️⃣ Hava debisi düşük\n3️⃣ Evaporatör kirli";
+}
+
+else if(ariza.includes("defrost")){
+sonuc="1️⃣ Dış serpantin kirli\n2️⃣ Sensör arızası\n3️⃣ Gaz eksik";
+}
+
+else if(ariza.includes("çalışmıyor")){
+sonuc="1️⃣ Sigorta\n2️⃣ Kart\n3️⃣ Kompresör";
+}
+
+alert(sonuc);
+
+}
+<</body>
 </html>
+:::

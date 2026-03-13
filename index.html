@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAFER HVAC AI</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#020617;
+padding:15px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
+
+.container{
+padding:15px;
+}
+
+.card{
+background:#1e293b;
+padding:18px;
+margin-bottom:12px;
+border-radius:10px;
+text-align:center;
+font-size:18px;
+cursor:pointer;
+}
+
+.card:hover{
+background:#334155;
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+margin-top:10px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:#2563eb;
+color:white;
+font-size:16px;
+}
+
+.result{
+background:#1e293b;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+white-space:pre-line;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+width:100%;
+background:#020617;
+display:flex;
+justify-content:space-around;
+padding:10px;
+}
+
+.tab{
+font-size:20px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>ZAFER HVAC AI</header>
+
+<div class="container" id="home">
+
+<div class="card" onclick="show('ai')">🤖 AI Klima Asistanı</div>
+<div class="card" onclick="show('split')">❄ Split Klima Teşhis</div>
+<div class="card" onclick="show('superheat')">🌡 Superheat Hesap</div>
+<div class="card" onclick="show('subcool')">💧 Subcool Hesap</div>
+<div class="card" onclick="show('sensor')">📟 Sensör Test</div>
+<div class="card" onclick="show('gas')">📊 Gaz Bilgileri</div>
+
+</div>
+
+
+<div class="container" id="ai" style="display:none">
+
+<h3>AI Klima Teşhis</h3>
+
+<input id="aiText" placeholder="Arızayı yaz">
+
+<button onclick="ai()">Teşhis Et</button>
+
+<div class="result" id="aiResult"></div>
+
+</div>
+
+
+<div class="container" id="split" style="display:none">
+
+<h3>Split Klima Hızlı Teşhis</h3>
+
+<div class="result">
+
+SOĞUTMUYOR
+
+• Gaz eksik olabilir  
+• Kondanser kirli olabilir  
+• Fan motoru arızalı olabilir  
+• Kompresör devreye girmiyor olabilir  
+
+BUZLANMA
+
+• Gaz eksik  
+• Evaporatör kirli  
+• Fan düşük devir  
+
+FAN ÇALIŞMIYOR
+
+• Fan motoru  
+• Fan kapasitörü  
+• Kart çıkışı
+
+</div>
+
+</div>
+
+
+<div class="container" id="superheat" style="display:none">
+
+<h3>Superheat Hesap</h3>
+
+<input id="sh1" placeholder="Emme borusu sıcaklığı °C">
+
+<input id="sh2" placeholder="Evaporasyon sıcaklığı °C">
+
+<button onclick="superheat()">Hesapla</button>
+
+<div class="result" id="shResult"></div>
+
+</div>
+
+
+<div class="container" id="subcool" style="display:none">
+
+<h3>Subcool Hesap</h3>
+
+<input id="sc1" placeholder="Kondenser sıcaklığı °C">
+
+<input id="sc2" placeholder="Sıvı boru sıcaklığı °C">
+
+<button onclick="subcool()">Hesapla</button>
+
+<div class="result" id="scResult"></div>
+
+</div>
+
+
+<div class="container" id="sensor" style="display:none">
+
+<h3>NTC Sensör Kontrol</h3>
+
+<div class="result">
+
+10K Sensör Ortalama Değerler
+
+20°C → 12 kΩ  
+25°C → 10 kΩ  
+30°C → 8 kΩ  
+40°C → 5 kΩ  
+
+Direnç düşüyorsa sensör ısınıyor demektir.
+
+</div>
+
+</div>
+
+
+<div class="container" id="gas" style="display:none">
+
+<h3>Gaz Basınç Bilgisi</h3>
+
+<div class="result">
+
+R410A
+
+0°C → 8 bar  
+10°C → 10 bar  
+20°C → 14 bar  
+30°C → 18 bar  
+
+
+R32
+
+0°C → 7 bar  
+10°C → 9 bar  
+20°C → 13 bar  
+30°C → 17 bar
+
+</div>
+
+</div>
+
+
+<div class="bottom">
+
+<div class="tab" onclick="show('home')">🏠</div>
+<div class="tab" onclick="show('ai')">🤖</div>
+<div class="tab" onclick="show('superheat')">🌡</div>
+
+</div>
+
+
+<script>
+
+function show(id){
+
+document.getElementById("home").style.display="none"
+document.getElementById("ai").style.display="none"
+document.getElementById("split").style.display="none"
+document.getElementById("superheat").style.display="none"
+document.getElementById("subcool").style.display="none"
+document.getElementById("sensor").style.display="none"
+document.getElementById("gas").style.display="none"
+
+document.getElementById(id).style.display="block"
+
+}
+
+function ai(){
+
+let text=document.getElementById("aiText").value.toLowerCase()
+
+let cevap="Teşhis bulunamadı"
+
+if(text.includes("soğutmuyor")){
+cevap="Gaz eksik olabilir\nKondanser kirli olabilir\nFan arızası olabilir"
+}
+
+else if(text.includes("fan")){
+cevap="Fan motoru\nFan kapasitörü\nKart çıkışı kontrol edilmeli"
+}
+
+else if(text.includes("buz")){
+cevap="Gaz eksik\nEvaporatör kirli\nFan düşük olabilir"
+}
+
+else if(text.includes("ısıtmıyor")){
+cevap="4 yollu vana\nGaz eksik\nDefrost modu"
+}
+
+document.getElementById("aiResult").innerText=cevap
+
+}
+
+function superheat(){
+
+let a=parseFloat(document.getElementById("sh1").value)
+let b=parseFloat(document.getElementById("sh2").value)
+
+let s=a-b
+
+document.getElementById("shResult").innerText="Superheat = "+s+" °C"
+
+}
+
+function subcool(){
+
+let a=parseFloat(document.getElementById("sc1").value)
+let b=parseFloat(document.getElementById("sc2").value)
+
+let s=a-b
+
+document.getElementById("scResult").innerText="Subcool = "+s+" °C"
+
+}
+
+</script>
+
+</body>
+</html>

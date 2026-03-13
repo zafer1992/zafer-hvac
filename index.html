@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZAFER HVAC AI</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
+}
+
+header{
+text-align:center;
+padding:15px;
+background:#020617;
+font-size:22px;
+font-weight:bold;
+}
+
+.container{
+padding:15px;
+}
+
+.card{
+background:#1e293b;
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+text-align:center;
+cursor:pointer;
+}
+
+.card:hover{
+background:#334155;
+}
+
+input,textarea{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+margin-top:10px;
+}
+
+button{
+padding:12px;
+width:100%;
+border:none;
+border-radius:8px;
+background:#2563eb;
+color:white;
+margin-top:10px;
+font-size:16px;
+}
+
+#sonuc{
+background:#1e293b;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+white-space:pre-line;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+width:100%;
+background:#020617;
+display:flex;
+justify-content:space-around;
+padding:10px 0;
+}
+
+.tab{
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>ZAFER HVAC AI</header>
+
+<div class="container" id="home">
+
+<div class="card" onclick="openAI()">🤖 AI USTA</div>
+
+<div class="card">❄ SPLIT KLİMA</div>
+
+<div class="card">🏢 VRF SİSTEM</div>
+
+<div class="card">🔥 ISI POMPASI</div>
+
+<div class="card">📊 GAZ TABLOSU</div>
+
+<div class="card">⚡ ELEKTRİK TEST</div>
+
+</div>
+
+
+<div class="container" id="ai" style="display:none">
+
+<h3>AI Klima Asistanı</h3>
+
+<textarea id="soru" placeholder="Arızayı yaz..."></textarea>
+
+<button onclick="teshis()">TEŞHİS ET</button>
+
+<div id="sonuc"></div>
+
+</div>
+
+
+<div class="container" id="foto" style="display:none">
+
+<h3>Foto Analiz</h3>
+
+<input type="file">
+
+</div>
+
+
+
+<div class="bottom">
+
+<div class="tab" onclick="show('home')">🏠</div>
+
+<div class="tab" onclick="show('ai')">🤖</div>
+
+<div class="tab" onclick="show('foto')">📷</div>
+
+</div>
+
+
+<script>
+
+function show(id){
+
+document.getElementById("home").style.display="none";
+document.getElementById("ai").style.display="none";
+document.getElementById("foto").style.display="none";
+
+document.getElementById(id).style.display="block";
+
+}
+
+
+function openAI(){
+
+show("ai")
+
+}
+
+
+function teshis(){
+
+let ariza=document.getElementById("soru").value.toLowerCase();
+
+let cevap="Teşhis bulunamadı";
+
+if(ariza.includes("soğutmuyor")){
+
+cevap="Muhtemel sebepler:\n\n1 Gaz eksik\n2 Kondanser kirli\n3 Fan arızası";
+
+}
+
+else if(ariza.includes("buz")){
+
+cevap="Muhtemel sebepler:\n\n1 Gaz eksik\n2 Hava debisi düşük\n3 Evaporatör kirli";
+
+}
+
+else if(ariza.includes("fan")){
+
+cevap="Muhtemel sebepler:\n\n1 Fan motoru\n2 Fan kartı\n3 Sensör hatası";
+
+}
+
+else if(ariza.includes("defrost")){
+
+cevap="Muhtemel sebepler:\n\n1 Dış serpantin kirli\n2 Sensör\n3 Gaz eksik";
+
+}
+
+document.getElementById("sonuc").innerText=cevap;
+
+}
+
+</script>
+
+</body>
+</html>

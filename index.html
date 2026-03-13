@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Zafer HVAC AI</title>
+
+<style>
+
+body{
+margin:0;
+font-family:-apple-system,Arial;
+background:#0f172a;
+color:white;
+}
+
+.header{
+text-align:center;
+padding:18px;
+font-size:22px;
+font-weight:bold;
+}
+
+.screen{
+display:none;
+padding:16px;
+padding-bottom:90px;
+}
+
+.active{
+display:block;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:14px;
+text-align:center;
+font-size:15px;
+}
+
+textarea{
+width:100%;
+height:90px;
+border-radius:10px;
+border:none;
+padding:10px;
+}
+
+button{
+margin-top:10px;
+width:100%;
+padding:12px;
+background:#2563eb;
+border:none;
+border-radius:10px;
+color:white;
+font-size:15px;
+}
+
+.result{
+margin-top:12px;
+background:#020617;
+padding:12px;
+border-radius:10px;
+white-space:pre-line;
+}
+
+.tabbar{
+position:fixed;
+bottom:0;
+width:100%;
+background:#020617;
+display:flex;
+justify-content:space-around;
+padding:10px 0;
+}
+
+.tab{
+text-align:center;
+font-size:13px;
+cursor:pointer;
+}
+
+img{
+max-width:100%;
+margin-top:10px;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+ZAFER HVAC AI PRO
+</div>
+
+<!-- ANA -->
+
+<div id="home" class="screen active">
+
+<div class="grid">
+
+<div class="card">❄ Split Klima</div>
+<div class="card">🏢 VRF Sistem</div>
+
+<div class="card">🔥 Isı Pompası</div>
+<div class="card">🌬 Fan Coil</div>
+
+<div class="card">🧊 Chiller</div>
+<div class="card">📚 Servis Rehberi</div>
+
+<div class="card">📊 Gaz Tablosu</div>
+<div class="card">⚡ Elektrik Ölçüm</div>
+
+</div>
+
+</div>
+
+<!-- AI -->
+
+<div id="ai" class="screen">
+
+<h3>Zafer HVAC AI</h3>
+
+<textarea id="soru" placeholder="Arıza belirtisini yaz"></textarea>
+
+<button onclick="teshis()">Sor</button>
+
+<div id="sonuc" class="result">
+AI hazır
+</div>
+
+</div>
+
+<!-- ARAÇ -->
+
+<div id="tools" class="screen">
+
+<div class="grid">
+
+<div class="card" onclick="gaz()">🔥 Gaz Analiz</div>
+<div class="card" onclick="superheat()">❄ Superheat</div>
+
+<div class="card" onclick="subcool()">💧 Subcool</div>
+<div class="card" onclick="delta()">📉 Delta-T</div>
+
+<div class="card" onclick="sensor()">🌡 Sensör</div>
+<div class="card" onclick="vrf()">🏢 VRF Kod</div>
+
+<div class="card" onclick="kompresor()">⚙ Kompresör</div>
+<div class="card" onclick="fan()">🌪 Fan Motor</div>
+
+</div>
+
+</div>
+
+<!-- FOTO -->
+
+<div id="photo" class="screen">
+
+<h3>Foto Analiz</h3>
+
+<input type="file" accept="image/*" onchange="foto(event)">
+
+<img id="img">
+
+<div class="result">
+Foto yüklendi
+</div>
+
+</div>
+
+
+<!-- TAB BAR -->
+
+<div class="tabbar">
+
+<div class="tab" onclick="openTab('home')">🏠 Ana</div>
+<div class="tab" onclick="openTab('ai')">🤖 AI</div>
+<div class="tab" onclick="openTab('tools')">🔧 Araç</div>
+<div class="tab" onclick="openTab('photo')">📷 Foto</div>
+
+</div>
+
+
+<script>
+
+function openTab(id){
+
+document.querySelectorAll(".screen").forEach(s=>{
+s.classList.remove("active")
+})
+
+document.getElementById(id).classList.add("active")
+
+}
+
+/* AI */
+
+function teshis(){
+
+let a=document.getElementById("soru").value.toLowerCase()
+
+let s="Teşhis bulunamadı"
+
+if(a.includes("soğutmuyor"))
+s="Gaz eksik\nKondanser kirli\nFan debisi düşük\nKompresör zayıf"
+
+else if(a.includes("buz"))
+s="Gaz düşük\nEvaporatör kirli\nFan düşük"
+
+else if(a.includes("fan"))
+s="Fan motoru\nFan kartı\nKapasitör"
+
+else if(a.includes("defrost"))
+s="Defrost sensörü\nGaz eksik"
+
+else if(a.includes("çalışmıyor"))
+s="Sigorta\nKart\nBesleme"
+
+document.getElementById("sonuc").innerText=s
+
+}
+
+/* foto */
+
+function foto(e){
+
+let reader=new FileReader()
+
+reader.onload=function(){
+document.getElementById("img").src=reader.result
+}
+
+reader.readAsDataURL(e.target.files[0])
+
+}
+
+/* araçlar */
+
+function gaz(){
+
+let bar=prompt("Basınç bar")
+
+if(bar<16) alert("Gaz düşük")
+else if(bar>24) alert("Gaz yüksek")
+else alert("Normal")
+
+}
+
+function superheat(){
+
+let b=prompt("Emiş boru °C")
+let e=prompt("Evap °C")
+
+alert("Superheat "+(b-e))
+
+}
+
+function subcool(){
+
+let s=prompt("Sıvı boru °C")
+let c=prompt("Kondens °C")
+
+alert("Subcool "+(c-s))
+
+}
+
+function delta(){
+
+let g=prompt("Giriş hava")
+let c=prompt("Çıkış hava")
+
+alert("DeltaT "+(g-c))
+
+}
+
+function sensor(){
+
+let k=prompt("Sensör kΩ")
+
+if(k>15) alert("≈20°C")
+else if(k>10) alert("≈30°C")
+else alert("≈40°C")
+
+}
+
+function vrf(){
+
+let kod=prompt("Hata kodu")
+
+if(kod=="H2") alert("IPM inverter arızası")
+else if(kod=="P03") alert("Fan motor arızası")
+else alert("Kod bulunamadı")
+
+}
+
+function kompresor(){
+
+let amp=prompt("Kompresör amper")
+
+if(amp<3) alert("Kompresör zayıf")
+else if(amp>10) alert("Aşırı akım")
+else alert("Normal")
+
+}
+
+function fan(){
+
+let volt=prompt("Fan volt")
+
+if(volt==0) alert("Kart çıkışı yok")
+else alert("Motor arızalı olabilir")
+
+}
+
+</script>
+
+</body>
+</html>
